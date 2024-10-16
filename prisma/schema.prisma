@@ -1,0 +1,192 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model AgeLevel {
+  id          String       @id
+  name        String
+  description String?
+  studioId    String
+  Studio      Studio       @relation(fields: [studioId], references: [userId], onDelete: Cascade)
+  danceClass  DanceClass[]
+}
+
+model DanceClass {
+  id                        String       @id
+  name                      String
+  performanceName           String?
+  styleOfDanceId            String
+  footwearId                String?
+  tightsId                  String?
+  song                      String?
+  competitions              Boolean?
+  recital                   Boolean
+  studioId                  String?
+  instructorId              String?
+  parentId                  String?
+  ageLevelId                String
+  skillLevelId              String
+  startTime                 String?
+  endTime                   String?
+  dayOfWeek                 String?
+  competitionEntryTime      String?
+  competitionEntryDayOfWeek String?
+  studioNotes               String?
+  competitionEntryNumber    String?
+  competitionName           String?
+  compScheduleUrl           String?
+  ageLevel                  AgeLevel     @relation(fields: [ageLevelId], references: [id])
+  footwear                  Footwear?    @relation(fields: [footwearId], references: [id])
+  instructor                Instructor?  @relation(fields: [instructorId], references: [userId])
+  parent                    Parent?      @relation(fields: [parentId], references: [userId], onDelete: Cascade)
+  skillLevel                SkillLevel   @relation(fields: [skillLevelId], references: [id])
+  studio                    Studio?      @relation(fields: [studioId], references: [userId], onDelete: Cascade)
+  styleOfDance              StyleOfDance @relation(fields: [styleOfDanceId], references: [id])
+  tights                    Tights?      @relation(fields: [tightsId], references: [id])
+  enrollment                Enrollment[]
+  schedule                  Schedule[]
+}
+
+model Dancer {
+  id            String       @id
+  firstName     String
+  lastName      String
+  birthdate     DateTime?
+  parentId      String
+  imageFilename String?
+  parent        Parent       @relation(fields: [parentId], references: [userId], onDelete: Cascade)
+  enrollment    Enrollment[]
+}
+
+model Enrollment {
+  id           String     @id
+  dancerId     String
+  danceClassId String
+  studioId     String
+  requested    DateTime?  @default(now())
+  approved     DateTime?  @default(now())
+  danceClass   DanceClass @relation(fields: [danceClassId], references: [id], onDelete: Cascade)
+  dancer       Dancer     @relation(fields: [dancerId], references: [id], onDelete: Cascade)
+  studio       Studio     @relation(fields: [studioId], references: [userId], onDelete: Cascade)
+}
+
+model Footwear {
+  id            String       @id
+  name          String
+  description   String?
+  url           String?
+  studioId      String
+  imageFilename String?
+  color         String?
+  danceClass    DanceClass[]
+  studio        Studio       @relation(fields: [studioId], references: [userId], onDelete: Cascade)
+}
+
+model Instructor {
+  userId     String       @id
+  firstName  String
+  lastName   String
+  danceClass DanceClass[]
+  user       User         @relation(fields: [userId], references: [userId])
+  studio     Studio[]
+}
+
+model Parent {
+  userId     String       @id
+  firstName  String
+  lastName   String
+  danceClass DanceClass[]
+  dancer     Dancer[]
+  user       User         @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  parentNote ParentNote[]
+}
+
+model ParentNote {
+  id        String   @id
+  parentId  String
+  note      String
+  createdAt DateTime @default(now())
+  parent    Parent   @relation(fields: [parentId], references: [userId], onDelete: Cascade)
+}
+
+model Schedule {
+  id           String     @id
+  danceClassId String
+  startTime    DateTime
+  endTime      DateTime
+  dayOfWeek    String
+  danceClass   DanceClass @relation(fields: [danceClassId], references: [id], onDelete: Cascade)
+}
+
+model SkillLevel {
+  id          String       @id
+  name        String
+  description String?
+  studioId    String
+  danceClass  DanceClass[]
+  studio      Studio       @relation(fields: [studioId], references: [userId], onDelete: Cascade)
+}
+
+model Studio {
+  userId        String         @id
+  name          String
+  vectorStoreId String?
+  assistantId   String?
+  ageLevel      AgeLevel[]
+  danceClass    DanceClass[]
+  enrollment    Enrollment[]
+  footwear      Footwear[]
+  skillLevel    SkillLevel[]
+  user          User           @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  styleOfDance  StyleOfDance[]
+  tights        Tights[]
+  instructor    Instructor[]
+}
+
+model StyleOfDance {
+  id          String       @id
+  name        String
+  description String?
+  studioId    String
+  danceClass  DanceClass[]
+  studio      Studio       @relation(fields: [studioId], references: [userId], onDelete: Cascade)
+}
+
+model Tights {
+  id            String       @id
+  name          String
+  description   String?
+  url           String?
+  imageFilename String?
+  studioId      String
+  color         String?
+  danceClass    DanceClass[]
+  studio        Studio       @relation(fields: [studioId], references: [userId], onDelete: Cascade)
+}
+
+model User {
+  email      String      @unique
+  password   String
+  type       UserType
+  userId     String      @id
+  instructor Instructor?
+  parent     Parent?
+  studio     Studio?
+}
+
+enum CompetitiveLevel {
+  RECREATIONAL
+  COMPETITIVE
+}
+
+enum UserType {
+  PARENT
+  STUDIO
+  INSTRUCTOR
+}
