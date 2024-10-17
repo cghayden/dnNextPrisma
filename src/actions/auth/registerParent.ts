@@ -1,9 +1,8 @@
 'use server'
-// import { cookies } from 'next/headers'
-// import { signin, signup } from '@/utils/authTools'
+import { cookies } from 'next/headers'
 import { z } from 'zod'
-// import { redirect } from 'next/navigation'
-// import { COOKIE_NAME } from '@/utils/constants'
+import { redirect } from 'next/navigation'
+import { COOKIE_NAME } from '@/utils/constants'
 import { signupParent } from '../mutations/parent'
 // import { PassThrough } from 'stream'
 
@@ -30,13 +29,13 @@ export const registerParent = async (prevState: any, formData: FormData) => {
   })
 
   try {
-    const newParent = await signupParent(data)
+    const { newParent, token } = await signupParent(data)
     console.log('newParent', newParent)
-    // cookies().set(COOKIE_NAME, token)
+    cookies().set(COOKIE_NAME, token)
   } catch (e) {
     console.error(e)
     return { message: 'Failed to sign up' }
   }
   // redirect cannot be put in a try-catch
-  // redirect('/dashboard')
+  redirect('/parent')
 }

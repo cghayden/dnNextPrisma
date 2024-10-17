@@ -1,5 +1,7 @@
 import 'server-only'
 import prisma from '@/db/db'
+import jwt from 'jsonwebtoken'
+
 import type {
   User,
   Parent,
@@ -13,6 +15,13 @@ import type {
 } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 
+const COOKIE_SECRET = process.env.COOKIE_SECRET!
+
+export const createTokenForUser = (userId: string) => {
+  const token = jwt.sign({ id: userId }, COOKIE_SECRET)
+  return token
+}
+
 export async function signupParent({
   firstName,
   lastName,
@@ -24,9 +33,9 @@ export async function signupParent({
   email: User['email']
   password: User['password']
 }) {
-  const hashedPassword = await bcrypt.hash(password, 10)
   const type = 'PARENT'
-  return prisma.user.create({
+  const hashedPassword = await bcrypt.hash(password, 10)
+  const newParent = await prisma.user.create({
     data: {
       email,
       type,
@@ -44,4 +53,6 @@ export async function signupParent({
       type: true,
     },
   })
+  const token = createTokenForUser(newParent.userId)
+  return { token, newParent }
 }
