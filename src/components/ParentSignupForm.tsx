@@ -3,13 +3,13 @@
 import { registerParent } from '@/actions/auth/registerParent'
 import { Input } from '@nextui-org/react'
 import Link from 'next/link'
-import { useFormState } from 'react-dom'
+import { useActionState } from 'react'
 import SubmitButton from './SubmitButton'
 
 const initialState = { message: null }
 
 const ParentSignupForm = () => {
-  const [formState, action] = useFormState<{ message: string | null }>(
+  const [formState, action] = useActionState<{ message: string | null }>(
     registerParent,
     initialState
   )

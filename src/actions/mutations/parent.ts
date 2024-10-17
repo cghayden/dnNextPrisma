@@ -1,3 +1,4 @@
+import 'server-only'
 import prisma from '@/db/db'
 import type {
   User,
@@ -36,6 +37,11 @@ export async function signupParent({
           lastName,
         },
       },
+    },
+    select: {
+      email: true,
+      userId: true,
+      type: true,
     },
   })
 }
