@@ -3,7 +3,7 @@ import { cookies } from 'next/headers'
 import { z } from 'zod'
 import { redirect } from 'next/navigation'
 import { COOKIE_NAME } from '@/utils/constants'
-import { getUser } from '../queries/getUser'
+import { signinUser } from '../../models/user'
 // import { PassThrough } from 'stream'
 
 const authSchema = z.object({
@@ -21,7 +21,7 @@ export const signin = async (prevState: any, formData: FormData) => {
   let user
   let token
   try {
-    const response = await getUser(data)
+    const response = await signinUser(data)
     console.log('response', response)
     if (!response) {
       throw new Error('User Not found: Invalid email or password')

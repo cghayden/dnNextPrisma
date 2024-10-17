@@ -3,10 +3,10 @@ import { cookies } from 'next/headers'
 import { z } from 'zod'
 import { redirect } from 'next/navigation'
 import { COOKIE_NAME } from '@/utils/constants'
-import { signupParent } from '../mutations/parent'
+import { signupParent } from '../../models/parent'
 // import { PassThrough } from 'stream'
 
-const authSchema = z.object({
+const signupParentSchema = z.object({
   firstName: z
     .string({ required_error: 'First Name is required' })
     .min(2, { message: 'First Name Must Be At Least 2 Characters' }),
@@ -21,7 +21,7 @@ const authSchema = z.object({
 
 export const registerParent = async (prevState: any, formData: FormData) => {
   // validate input with zod
-  const data = authSchema.parse({
+  const data = signupParentSchema.parse({
     firstName: formData.get('firstName'),
     lastName: formData.get('lastName'),
     email: formData.get('email'),
@@ -30,8 +30,7 @@ export const registerParent = async (prevState: any, formData: FormData) => {
 
   try {
     // does user already exist?
-    const { newParent, token } = await signupParent(data)
-    console.log('newParent', newParent)
+    const { token } = await signupParent(data)
     cookies().set(COOKIE_NAME, token)
   } catch (e) {
     console.error(e)

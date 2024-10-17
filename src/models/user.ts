@@ -3,7 +3,7 @@ import { createTokenForUser } from '@/utils/createTokenForUser'
 import type { User } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 
-export async function getUser({
+export async function signinUser({
   email,
   password,
 }: {
@@ -13,7 +13,6 @@ export async function getUser({
   const userWithPassword = await prisma.user.findUnique({
     where: { email },
   })
-  console.log('userWithPassword', userWithPassword)
 
   if (!userWithPassword || !userWithPassword.password) {
     return null
@@ -24,8 +23,8 @@ export async function getUser({
     return null
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { password: _password, ...userWithoutPassword } = userWithPassword
-  console.log('userWithoutPassword', userWithoutPassword)
 
   const token = createTokenForUser(userWithoutPassword.userId)
 

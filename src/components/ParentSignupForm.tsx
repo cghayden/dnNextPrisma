@@ -59,7 +59,7 @@ const ParentSignupForm = () => {
       />
       <SubmitButton label={'Sign Up'} />
       <div>
-        <Link href='/signin'>{`Already have an account?`}</Link>
+        <Link href='/signup'>{`Create an account?`}</Link>
       </div>
     </form>
   )

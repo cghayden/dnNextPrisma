@@ -13,6 +13,7 @@ export default function SignInForm() {
     signin,
     initialState
   )
+  console.log('formState', formState)
 
   return (
     <form
