@@ -13,6 +13,7 @@ const ParentSignupForm = () => {
     registerParent,
     initialState
   )
+  console.log('formState', formState)
 
   return (
     <form

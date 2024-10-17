@@ -29,6 +29,7 @@ export const registerParent = async (prevState: any, formData: FormData) => {
   })
 
   try {
+    // does user already exist?
     const { newParent, token } = await signupParent(data)
     console.log('newParent', newParent)
     cookies().set(COOKIE_NAME, token)

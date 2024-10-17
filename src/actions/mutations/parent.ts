@@ -1,6 +1,5 @@
 import 'server-only'
 import prisma from '@/db/db'
-import jwt from 'jsonwebtoken'
 
 import type {
   User,
@@ -14,13 +13,7 @@ import type {
   // StyleOfDance,
 } from '@prisma/client'
 import bcrypt from 'bcryptjs'
-
-const COOKIE_SECRET = process.env.COOKIE_SECRET!
-
-export const createTokenForUser = (userId: string) => {
-  const token = jwt.sign({ id: userId }, COOKIE_SECRET)
-  return token
-}
+import { createTokenForUser } from '@/utils/createTokenForUser'
 
 export async function signupParent({
   firstName,
