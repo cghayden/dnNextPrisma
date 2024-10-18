@@ -1,3 +1,5 @@
+// class table inheritance for users and usertypes with shared userId key
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -6,6 +8,66 @@ datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
+}
+
+
+enum CompetitiveLevel {
+  RECREATIONAL
+  COMPETITIVE
+}
+
+enum UserType {
+  PARENT
+  STUDIO
+  INSTRUCTOR
+  RETAILER
+}
+
+// type 'User' for all user types, with common fields and auth requirements
+model User {
+  userId     String      @id @default(uuid()) // UUID type
+  email      String      @unique
+  password   String
+  type       UserType
+  instructor Instructor?
+  parent     Parent?
+  studio     Studio?
+}
+
+// user subtypes
+model Studio {
+  userId        String         @id
+  name          String
+  vectorStoreId String?
+  assistantId   String?
+  ageLevel      AgeLevel[]
+  danceClass    DanceClass[]
+  enrollment    Enrollment[]
+  footwear      Footwear[]
+  skillLevel    SkillLevel[]
+  user          User           @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  styleOfDance  StyleOfDance[]
+  tights        Tights[]
+  instructor    Instructor[]
+}
+
+model Parent {
+  userId     String       @id
+  firstName  String
+  lastName   String
+  danceClass DanceClass[]
+  dancer     Dancer[]
+  user       User         @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  parentNote ParentNote[]
+}
+
+model Instructor {
+  userId     String       @id
+  firstName  String
+  lastName   String
+  danceClass DanceClass[]
+  user       User         @relation(fields: [userId], references: [userId])
+  studio     Studio[]
 }
 
 model AgeLevel {
@@ -88,25 +150,6 @@ model Footwear {
   studio        Studio       @relation(fields: [studioId], references: [userId], onDelete: Cascade)
 }
 
-model Instructor {
-  userId     String       @id
-  firstName  String
-  lastName   String
-  danceClass DanceClass[]
-  user       User         @relation(fields: [userId], references: [userId])
-  studio     Studio[]
-}
-
-model Parent {
-  userId     String       @id
-  firstName  String
-  lastName   String
-  danceClass DanceClass[]
-  dancer     Dancer[]
-  user       User         @relation(fields: [userId], references: [userId], onDelete: Cascade)
-  parentNote ParentNote[]
-}
-
 model ParentNote {
   id        String   @id
   parentId  String
@@ -133,22 +176,6 @@ model SkillLevel {
   studio      Studio       @relation(fields: [studioId], references: [userId], onDelete: Cascade)
 }
 
-model Studio {
-  userId        String         @id
-  name          String
-  vectorStoreId String?
-  assistantId   String?
-  ageLevel      AgeLevel[]
-  danceClass    DanceClass[]
-  enrollment    Enrollment[]
-  footwear      Footwear[]
-  skillLevel    SkillLevel[]
-  user          User           @relation(fields: [userId], references: [userId], onDelete: Cascade)
-  styleOfDance  StyleOfDance[]
-  tights        Tights[]
-  instructor    Instructor[]
-}
-
 model StyleOfDance {
   id          String       @id
   name        String
@@ -170,23 +197,5 @@ model Tights {
   studio        Studio       @relation(fields: [studioId], references: [userId], onDelete: Cascade)
 }
 
-model User {
-  email      String      @unique
-  password   String
-  type       UserType
-  userId     String      @id @default(uuid()) // UUID type
-  instructor Instructor?
-  parent     Parent?
-  studio     Studio?
-}
 
-enum CompetitiveLevel {
-  RECREATIONAL
-  COMPETITIVE
-}
 
-enum UserType {
-  PARENT
-  STUDIO
-  INSTRUCTOR
-}
