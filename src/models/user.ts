@@ -1,7 +1,13 @@
+import 'server-only'
+
 import prisma from '@/db/db'
 import { createTokenForUser } from '@/utils/createTokenForUser'
 import type { User } from '@prisma/client'
 import bcrypt from 'bcryptjs'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
+import { COOKIE_NAME } from '@/utils/constants'
+import jwt from 'jsonwebtoken'
 
 export async function signinUser({
   email,
@@ -15,12 +21,12 @@ export async function signinUser({
   })
 
   if (!userWithPassword || !userWithPassword.password) {
-    return null
+    throw new Error('invalid user or password')
   }
   const isValid = await bcrypt.compare(password, userWithPassword.password)
 
   if (!isValid) {
-    return null
+    throw new Error('invalid password')
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -29,4 +35,28 @@ export async function signinUser({
   const token = createTokenForUser(userWithoutPassword.userId)
 
   return { user: userWithoutPassword, token }
+}
+
+export const getCurrentUser = async () => {
+  const token = cookies().get(COOKIE_NAME)
+  if (!token) redirect('/signin')
+  const user = await getUserFromToken(token)
+  if (!user) redirect('/signin')
+  return user
+}
+
+const getUserFromToken = async (token: { name: string; value: string }) => {
+  const payload = jwt.verify(token.value, process.env.COOKIE_SECRET!) as {
+    id: string
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { userId: payload.id },
+    select: {
+      userId: true,
+      email: true,
+    },
+  })
+
+  return user
 }

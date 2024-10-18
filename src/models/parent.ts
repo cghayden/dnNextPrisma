@@ -49,3 +49,12 @@ export async function signupParent({
   const token = createTokenForUser(newParent.userId)
   return { token, newParent }
 }
+
+export const getDancerCount = async (userId: string) => {
+  const dancerCount = await prisma.dancer.count({
+    where: {
+      parentId: userId,
+    },
+  })
+  return dancerCount
+}

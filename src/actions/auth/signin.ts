@@ -22,16 +22,14 @@ export const signin = async (prevState: any, formData: FormData) => {
   let token
   try {
     const response = await signinUser(data)
-    console.log('response', response)
-    if (!response) {
-      throw new Error('User Not found: Invalid email or password')
+    if (response) {
+      user = response.user
+      token = response.token
+      cookies().set(COOKIE_NAME, token)
     }
-    user = response.user
-    token = response.token
-    cookies().set(COOKIE_NAME, token)
   } catch (e) {
     console.error(e)
-    return { message: 'Failed to sign in' }
+    return { message: `Failed to sign in ${e.message}` }
   }
   // redirect cannot be put in a try-catch
   redirect(`/${user.type.toLowerCase()}`)

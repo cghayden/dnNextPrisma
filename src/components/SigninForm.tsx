@@ -2,7 +2,7 @@
 
 import { signin } from '@/actions/auth/signin'
 import { Input } from '@nextui-org/react'
-// import Link from 'next/link'
+import Link from 'next/link'
 import { useFormState } from 'react-dom'
 import SubmitButton from './SubmitButton'
 
@@ -40,6 +40,10 @@ export default function SignInForm() {
         autoComplete='current-password'
       />
       <SubmitButton label={'Sign In'} />
+      <div>
+        <Link href='/signup'>{`Create an account?`}</Link>
+      </div>
+      {formState.message && <p>{formState.message}</p>}
     </form>
   )
 }
