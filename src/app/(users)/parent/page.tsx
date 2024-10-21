@@ -8,7 +8,6 @@ export default async function ParentHome() {
 
   return (
     <div>
-      <h2>Parent Home</h2>
       <p>You have {dancerCount} dancers</p>
     </div>
   )

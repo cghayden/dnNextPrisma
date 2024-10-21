@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${inter.className} dark text-foreground bg-background h-screen w-screen`}
+        className={`${inter.className} bg-zinc-100 text-zinc-950 h-screen w-screen`}
       >
         <NextUIProvider>{children}</NextUIProvider>
       </body>
