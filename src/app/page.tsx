@@ -25,39 +25,39 @@ export default function Welcome() {
           />
           <div className='absolute inset-0 bg-[color:rgba(27,167,254,0.4)] mix-blend-multiply' />
         </div>
-        <div className='logo fixed top-32 left-1/2 transform -translate-x-1/2 whitespace-nowrap'>
+
+        <div className='grid h-full place-items-center'>
+          {/* <div className='logo fixed top-32 left-1/2 transform -translate-x-1/2 whitespace-nowrap'> */}
           <h1 className=' text-center text-5xl font-extrabold tracking-tight sm:text-6xl'>
             <span className='block uppercase text-gray-300 drop-shadow-md'>
               Dancer Notes
             </span>
           </h1>
-        </div>
 
-        <div className='grid h-full place-items-center'>
-          <div className='relative'>
-            <div className='activeView w-[320px] mx-auto mt-10 justify-center'>
-              <div className=''>{showSignup ? <Signup /> : <SignInForm />}</div>
-              <div className='text-zinc-300 flex justify-center py-8 text-xl'>
-                {showSignup ? (
-                  <button onClick={() => setShowSignup(false)}>Login</button>
-                ) : (
-                  <button onClick={() => setShowSignup(true)}>
-                    Create an Account
-                  </button>
-                )}
-              </div>
+          <div className=' relative activeView w-11/12 max-w-xl mx-auto mt-10 justify-center'>
+            {showSignup ? <Signup /> : <SignInForm />}
+            <div className='text-zinc-300 flex justify-center py-8 text-xl'>
+              {showSignup ? (
+                <button onClick={() => setShowSignup(false)}>
+                  Already have an account? Sign in
+                </button>
+              ) : (
+                <button onClick={() => setShowSignup(true)}>
+                  Create an Account
+                </button>
+              )}
             </div>
           </div>
-        </div>
-        <div className='fixed bottom-20 left-2/4 -translate-x-2/4 text-gray-50'>
-          <div className='flex flex-wrap gap-10'>
-            <a className='whitespace-nowrap' href='loginSampleStudio'>
-              Login To Sample Studio
-            </a>
-            <br />
-            <a className='whitespace-nowrap' href='loginSampleParent'>
-              Login To Sample Parent Account
-            </a>
+          <div className='relative text-gray-50'>
+            <div className='flex flex-col md:flex-row flex-wrap'>
+              <a className='whitespace-nowrap' href='loginSampleStudio'>
+                Login To Sample Studio
+              </a>
+              <br />
+              <a className='whitespace-nowrap' href='loginSampleParent'>
+                Login To Sample Parent Account
+              </a>
+            </div>
           </div>
         </div>
       </div>
