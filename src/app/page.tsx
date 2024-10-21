@@ -1,67 +1,66 @@
-import Image from 'next/image'
+'use client'
 
-export default function Home() {
+import { useState } from 'react'
+import stageLights from '@/images/stageLights.png'
+import Image from 'next/image'
+// import Link from 'next/link'
+// import ParentSignupForm from '@/components/ParentSignupForm'
+import SignInForm from '@/components/SigninForm'
+import Signup from '@/components/Signup'
+// import { useOptionalUser } from '~/utils'
+
+export default function Welcome() {
+  // const [showUserTypeChoice, toggleShowUserTypeChoice] = useState(false)
+  const [showSignup, setShowSignup] = useState(false)
+
+  // const user = useOptionalUser()
   return (
-    <div className='grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]'>
-      <main className='flex flex-col gap-8 row-start-2 items-center sm:items-start'>
-        <ol className='list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]'>
-          <li className='mb-2'>
-            Get started by editing{' '}
-            <code className='bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold'>
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-      </main>
-      <footer className='row-start-3 flex gap-6 flex-wrap items-center justify-center'>
-        <a
-          className='flex items-center gap-2 hover:underline hover:underline-offset-4'
-          href='https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
+    <main>
+      <div className='h-screen w-screen'>
+        <div className='absolute inset-0'>
           <Image
-            aria-hidden
-            src='https://nextjs.org/icons/file.svg'
-            alt='File icon'
-            width={16}
-            height={16}
+            className='h-full w-full object-cover'
+            src={stageLights}
+            alt='stage lights'
           />
-          Learn
-        </a>
-        <a
-          className='flex items-center gap-2 hover:underline hover:underline-offset-4'
-          href='https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          <Image
-            aria-hidden
-            src='https://nextjs.org/icons/window.svg'
-            alt='Window icon'
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className='flex items-center gap-2 hover:underline hover:underline-offset-4'
-          href='https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          <Image
-            aria-hidden
-            src='https://nextjs.org/icons/globe.svg'
-            alt='Globe icon'
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          <div className='absolute inset-0 bg-[color:rgba(27,167,254,0.4)] mix-blend-multiply' />
+        </div>
+        <div className='logo fixed top-32 left-1/2 transform -translate-x-1/2 whitespace-nowrap'>
+          <h1 className=' text-center text-5xl font-extrabold tracking-tight sm:text-6xl'>
+            <span className='block uppercase text-gray-300 drop-shadow-md'>
+              Dancer Notes
+            </span>
+          </h1>
+        </div>
+
+        <div className='grid h-full place-items-center'>
+          <div className='relative'>
+            <div className='activeView w-[320px] mx-auto mt-10 justify-center'>
+              <div className=''>{showSignup ? <Signup /> : <SignInForm />}</div>
+              <div className='text-zinc-300 flex justify-center py-8 text-xl'>
+                {showSignup ? (
+                  <button onClick={() => setShowSignup(false)}>Login</button>
+                ) : (
+                  <button onClick={() => setShowSignup(true)}>
+                    Create an Account
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='fixed bottom-20 left-2/4 -translate-x-2/4 text-gray-50'>
+          <div className='flex flex-wrap gap-10'>
+            <a className='whitespace-nowrap' href='loginSampleStudio'>
+              Login To Sample Studio
+            </a>
+            <br />
+            <a className='whitespace-nowrap' href='loginSampleParent'>
+              Login To Sample Parent Account
+            </a>
+          </div>
+        </div>
+      </div>
+    </main>
   )
 }
