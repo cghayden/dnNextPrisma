@@ -13,15 +13,19 @@ const authSchema = z.object({
 
 export const signin = async (prevState: any, formData: FormData) => {
   // validate input with zod
-  const data = authSchema.parse({
+  const input = authSchema.safeParse({
     email: formData.get('email'),
     password: formData.get('password'),
   })
 
+  if (!input.success) {
+    return { message: input.error.errors[0].message }
+  }
+
   let user
   let token
   try {
-    const response = await signinUser(data)
+    const response = await signinUser(input.data)
     if (response) {
       user = response.user
       token = response.token
@@ -32,5 +36,5 @@ export const signin = async (prevState: any, formData: FormData) => {
     return { message: `Failed to sign in ${e.message}` }
   }
   // redirect cannot be put in a try-catch
-  redirect(`/${user.type.toLowerCase()}`)
+  redirect(`/${user?.type.toLowerCase()}`)
 }

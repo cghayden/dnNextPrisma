@@ -28,26 +28,32 @@ export async function signupParent({
 }) {
   const type = 'PARENT'
   const hashedPassword = await bcrypt.hash(password, 10)
-  const newParent = await prisma.user.create({
-    data: {
-      email,
-      type,
-      password: hashedPassword,
-      parent: {
-        create: {
-          firstName,
-          lastName,
+  try {
+    const newParent = await prisma.user.create({
+      data: {
+        email,
+        type,
+        password: hashedPassword,
+        parent: {
+          create: {
+            firstName,
+            lastName,
+          },
         },
       },
-    },
-    select: {
-      email: true,
-      userId: true,
-      type: true,
-    },
-  })
-  const token = createTokenForUser(newParent.userId)
-  return { token, newParent }
+      select: {
+        email: true,
+        userId: true,
+        type: true,
+      },
+    })
+
+    const token = createTokenForUser(newParent.userId)
+    return { token, newParent }
+  } catch (error) {
+    console.error('Error creating new parent:', error)
+    throw new Error(`Failed to create new parent: ${error.message}`)
+  }
 }
 
 export const getDancerCount = async (userId: string) => {

@@ -21,20 +21,24 @@ const signupParentSchema = z.object({
 
 export const registerParent = async (prevState: any, formData: FormData) => {
   // validate input with zod
-  const data = signupParentSchema.parse({
+  const input = signupParentSchema.safeParse({
     firstName: formData.get('firstName'),
     lastName: formData.get('lastName'),
     email: formData.get('email'),
     password: formData.get('password'),
   })
 
+  if (!input.success) {
+    return { message: input.error.errors[0].message }
+  }
+
   try {
     // does user already exist?
-    const { token } = await signupParent(data)
+    const { token } = await signupParent(input.data)
     cookies().set(COOKIE_NAME, token)
   } catch (e) {
     console.error(e)
-    return { message: 'Failed to sign up' }
+    return { message: `Error: Failed to sign up ${e.message}` }
   }
   // redirect cannot be put in a try-catch
   redirect('/parent')

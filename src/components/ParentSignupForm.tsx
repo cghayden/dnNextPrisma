@@ -61,6 +61,7 @@ const ParentSignupForm = () => {
       <div>
         <Link href='/signup'>{`Already have an account? Sign in here`}</Link>
       </div>
+      {formState.message && <p>{formState.message}</p>}
     </form>
   )
 }
