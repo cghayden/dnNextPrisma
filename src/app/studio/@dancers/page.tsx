@@ -1,5 +1,6 @@
 import { getUniqueDancers } from '@/models/studio'
 import { getCurrentUser } from '@/models/user'
+import Link from 'next/link'
 
 const DancersSlot = async () => {
   const studio = await getCurrentUser()
@@ -22,14 +23,14 @@ const DancersSlot = async () => {
           const dancerName = `${dancer.firstName} ${dancer.lastName}`
           const parentName = `${dancer.parent.firstName} ${dancer.parent.lastName}`
           return (
-            <li key={dancer.id}>
+            <Link href={`/studio/dancer/${dancer.id}`} key={dancer.id}>
               <p className='grid grid-cols-2'>
                 <span className='text-lg text-blue-800 pl-2'>
                   {dancerName}{' '}
                 </span>
                 <span>{parentName}</span>
               </p>
-            </li>
+            </Link>
           )
         })}
       </ul>

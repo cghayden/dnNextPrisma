@@ -29,7 +29,7 @@ const StudioDashboard = ({
           </div>
         </div>
       ) : (
-        <div>{children}</div>
+        <>{children}</>
       )}
     </Shell>
   )
