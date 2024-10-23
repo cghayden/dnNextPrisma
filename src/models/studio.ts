@@ -16,7 +16,6 @@ import type {
 import bcrypt from 'bcryptjs'
 import { createTokenForUser } from '@/utils/createTokenForUser'
 import { delay } from '@/utils/delay'
-import { i } from 'framer-motion/client'
 
 export async function signupStudio({
   name,
@@ -52,6 +51,7 @@ export async function signupStudio({
 
 export const getUniqueDancers = memoize(
   async (studioId: string) => {
+    //simulate delay
     await delay()
 
     const distinctDancerEnrollments = await prisma.enrollment.findMany({
