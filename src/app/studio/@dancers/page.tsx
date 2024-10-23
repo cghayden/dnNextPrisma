@@ -4,11 +4,31 @@ import { getCurrentUser } from '@/models/user'
 const DancersSlot = async () => {
   const studio = await getCurrentUser()
   const dancers = await getUniqueDancers(studio.userId)
-  // console.log('dancers', dancers)
   return (
     <div>
-      <h1>dancers Slot</h1>
-      <p>Here are the dancers</p>
+      <h1>All Studio Dancers</h1>
+      <ul>
+        <li>
+          <p className='grid grid-cols-2 border-b-2 border-b-zinc-800'>
+            <span className='text-lg text-blue-800 pl-2'>Dancer</span>
+            <span>Parent</span>
+          </p>
+        </li>
+        {dancers.map((dancer) => {
+          const dancerName = `${dancer.firstName} ${dancer.lastName}`
+          const parentName = `${dancer.parent.firstName} ${dancer.parent.lastName}`
+          return (
+            <li key={dancer.id}>
+              <p className='grid grid-cols-2'>
+                <span className='text-lg text-blue-800 pl-2'>
+                  {dancerName}{' '}
+                </span>
+                <span>{parentName}</span>
+              </p>
+            </li>
+          )
+        })}
+      </ul>
     </div>
   )
 }

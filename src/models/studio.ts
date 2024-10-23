@@ -1,5 +1,6 @@
 import 'server-only'
 import prisma from '@/db/db'
+import { memoize } from 'nextjs-better-unstable-cache'
 
 import type {
   User,
@@ -14,6 +15,8 @@ import type {
 } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 import { createTokenForUser } from '@/utils/createTokenForUser'
+import { delay } from '@/utils/delay'
+import { i } from 'framer-motion/client'
 
 export async function signupStudio({
   name,
@@ -47,16 +50,48 @@ export async function signupStudio({
   return { token, newStudio }
 }
 
-export async function getUniqueDancers(studioId: string) {
-  const uniqueDancers = await prisma.enrollment.findMany({
-    where: {
-      studioId: studioId,
-    },
-    distinct: ['dancerId'],
-  })
+export const getUniqueDancers = memoize(
+  async (studioId: string) => {
+    await delay()
 
-  return uniqueDancers
-}
+    const distinctDancerEnrollments = await prisma.enrollment.findMany({
+      orderBy: [{ dancer: { lastName: 'asc' } }],
+      where: {
+        studioId: studioId,
+      },
+      distinct: ['dancerId'],
+
+      include: {
+        dancer: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            parent: {
+              select: {
+                firstName: true,
+                lastName: true,
+              },
+            },
+          },
+        },
+      },
+    })
+
+    const uniqueDancers = distinctDancerEnrollments.map(
+      (enrollment) => enrollment.dancer
+    )
+
+    return uniqueDancers || []
+  },
+  {
+    persist: true,
+    revalidateTags: () => ['dashboard:dancers'],
+    log: ['datacache', 'verbose', 'dedupe'],
+    logid: 'dashboard:dancers',
+    suppressWarnings: true,
+  }
+)
 
 export async function getStudioHomePanelData(studioId: string) {
   // throw new Error('not implemented')
