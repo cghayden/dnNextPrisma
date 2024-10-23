@@ -6,7 +6,11 @@ const DancersSlot = async () => {
   const dancers = await getUniqueDancers(studio.userId)
   return (
     <div>
-      <h1>All Studio Dancers</h1>
+      <div className='bg-zinc-200 py-2'>
+        <h2 className='text-lg font-semibold text-center'>
+          All Studio Dancers
+        </h2>
+      </div>
       <ul>
         <li>
           <p className='grid grid-cols-2 border-b-2 border-b-zinc-800'>

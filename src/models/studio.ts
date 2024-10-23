@@ -93,6 +93,37 @@ export const getUniqueDancers = memoize(
   }
 )
 
+export const getStudioDanceClasses = memoize(
+  async (studioId: string) => {
+    //simulate delay
+    await delay()
+
+    const danceClasses = await prisma.danceClass.findMany({
+      where: {
+        studioId,
+      },
+      select: {
+        id: true,
+        name: true,
+        ageLevel: true,
+        skillLevel: true,
+        styleOfDance: true,
+        tights: true,
+        footwear: true,
+      },
+    })
+
+    return danceClasses || []
+  },
+  {
+    persist: true,
+    revalidateTags: () => ['dashboard:danceClasses'],
+    log: ['datacache', 'verbose', 'dedupe'],
+    logid: 'dashboard:danceClasses',
+    suppressWarnings: true,
+  }
+)
+
 export async function getStudioHomePanelData(studioId: string) {
   // throw new Error('not implemented')
   return 'home panel data'
