@@ -8,6 +8,7 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { COOKIE_NAME } from '@/utils/constants'
 import jwt from 'jsonwebtoken'
+import { cache } from 'react'
 
 export async function signinUser({
   email,
@@ -37,13 +38,14 @@ export async function signinUser({
   return { user: userWithoutPassword, token }
 }
 
-export const getCurrentUser = async () => {
+export const getCurrentUser = cache(async () => {
+  console.log('getting current user')
   const token = cookies().get(COOKIE_NAME)
   if (!token) redirect('/signin')
   const user = await getUserFromToken(token)
   if (!user) redirect('/signin')
   return user
-}
+})
 
 const getUserFromToken = async (token: { name: string; value: string }) => {
   const payload = jwt.verify(token.value, process.env.COOKIE_SECRET!) as {

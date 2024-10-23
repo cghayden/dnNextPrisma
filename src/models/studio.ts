@@ -57,3 +57,8 @@ export async function getUniqueDancers(studioId: string) {
 
   return uniqueDancers
 }
+
+export async function getStudioHomePanelData(studioId: string) {
+  // throw new Error('not implemented')
+  return 'home panel data'
+}

@@ -6,20 +6,20 @@ import Link from 'next/link'
 import { Button } from '@nextui-org/react'
 
 const links = [
-  { route: '/dashboard', name: 'Home' },
-  { route: '/dashboard/events', name: 'Events' },
-  { route: '/dashboard/guests', name: 'Guests' },
-  { route: '/dashboard/activity', name: 'Activity' },
-  { route: '/dashboard/settings', name: 'Settings' },
+  { route: '/studio', name: 'Home' },
+  { route: '/studio/dancers', name: 'Dancers' },
+  { route: '/studio/classes', name: 'Classes' },
+  { route: '/studio/events', name: 'Events' },
+  { route: '/studio/settings', name: 'Settings' },
 ]
 
-const Side = () => {
+const StudioSide = () => {
   // const activeClass = 'bg-primary hover:bg-primary'
 
   return (
     <div className='w-full h-full px-3 relative bg-zinc-300'>
       <div className='flex py-8'>
-        <h1 className='text-2xl font-bold'>DancerNotes</h1>
+        <h1 className='text-2xl font-bold'>StudioNotes</h1>
         {/* <figure className='w-[80px] pt-4'> */}
         {/* <Image src={Logo} alt='pardy' /> */}
         {/* </figure> */}
@@ -46,4 +46,4 @@ const Side = () => {
   )
 }
 
-export default Side
+export default StudioSide

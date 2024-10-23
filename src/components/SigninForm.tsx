@@ -36,7 +36,7 @@ export default function SignInForm() {
       />
       <SubmitButton label={'Sign In'} />
 
-      {formState.message && <p>{formState.message}</p>}
+      {formState.message && <p className='text-zinc-50'>{formState.message}</p>}
     </form>
   )
 }

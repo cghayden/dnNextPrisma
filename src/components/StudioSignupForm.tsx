@@ -17,7 +17,7 @@ const StudioSignupForm = () => {
 
   return (
     <form
-      className='bg-content1 border border-default-100 shadow-lg rounded-md p-3 flex flex-col gap-2 '
+      className='bg-content1 border border-zinc-400 shadow-lg rounded-md p-3 flex flex-col gap-2 '
       action={action}
     >
       <h3 className='my-4'>Studio Sign Up</h3>
