@@ -1,15 +1,24 @@
-const DancerPage = async () => {
+import { getDancer } from '@/models/dancer'
+
+const DancerPage = async ({ params }: { params: { id: string } }) => {
   // get dancer id from params
+  const dancerId = params.id
   // lookup dancer from db
-  // const user = await getDancer()
+  const dancer = await getDancer(dancerId)
   // if there is no user, it will redirect to signin ...
 
   return (
-    <div className='w-full flex h-full justify-center items-center'>
+    // <div className='w-full flex h-full'>
+    <div>
+      <h2 className='panel_heading'>Dancer</h2>
       <div>
-        <h4 className='text-lg'>Individual dancer slot</h4>
+        <h3 className=''>
+          {dancer.firstName} {dancer.lastName}
+        </h3>
+        <div>dancer info</div>
       </div>
     </div>
+    // </div>
   )
 }
 

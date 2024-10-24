@@ -5,3 +5,7 @@
 html {
   font-size: 14px;
 }
+
+.panel_heading {
+  @apply text-lg font-semibold text-blue-800 py-3 text-center mx-auto;
+}

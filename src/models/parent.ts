@@ -1,5 +1,6 @@
 import 'server-only'
 import prisma from '@/db/db'
+import { memoize } from 'nextjs-better-unstable-cache'
 
 import type {
   User,
@@ -64,3 +65,50 @@ export const getDancerCount = async (userId: string) => {
   })
   return dancerCount
 }
+
+export const getParentFromDancer = memoize(
+  async (dancerId: string) => {
+    const parent = await prisma.parent.findFirst({
+      where: {
+        dancer: {
+          some: {
+            id: dancerId,
+          },
+        },
+      },
+      select: {
+        firstName: true,
+        lastName: true,
+        userId: true,
+        user: {
+          select: {
+            email: true,
+          },
+        },
+        dancer: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            enrollment: {
+              select: {
+                danceClass: {
+                  select: {
+                    name: true,
+                    id: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    })
+
+    return parent
+  },
+  {
+    persist: true,
+    revalidateTags: () => ['dancer:account'],
+  }
+)
