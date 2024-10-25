@@ -2,18 +2,11 @@
 
 import { registerParent } from '@/actions/auth/registerParent'
 import { Input } from '@nextui-org/react'
-import Link from 'next/link'
 import { useFormState } from 'react-dom'
 import SubmitButton from './SubmitButton'
 
-const initialState = { message: null }
-
 const ParentSignupForm = () => {
-  const [formState, action] = useFormState<{ message: string | null }>(
-    registerParent,
-    initialState
-  )
-  console.log('formState', formState)
+  const [formState, action] = useFormState(registerParent, null)
 
   return (
     <form
@@ -58,7 +51,7 @@ const ParentSignupForm = () => {
         autoComplete='new-password'
       />
       <SubmitButton label={'Sign Up'} />
-      {formState.message && <p>{formState.message}</p>}
+      {formState?.message && <p>{formState.message}</p>}
     </form>
   )
 }

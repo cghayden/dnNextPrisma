@@ -19,7 +19,10 @@ const signupParentSchema = z.object({
     .min(8, { message: 'Password Must Be At Least 8 Characters' }),
 })
 
-export const registerParent = async (prevState: any, formData: FormData) => {
+export const registerParent = async (
+  prevState: unknown,
+  formData: FormData
+) => {
   // validate input with zod
   const input = signupParentSchema.safeParse({
     firstName: formData.get('firstName'),

@@ -38,8 +38,6 @@ model User {
 model Studio {
   userId        String         @id
   name          String
-  vectorStoreId String?
-  assistantId   String?
   ageLevel      AgeLevel[]
   danceClass    DanceClass[]
   enrollment    Enrollment[]

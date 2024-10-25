@@ -126,6 +126,67 @@ export const getStudioDanceClasses = memoize(
 )
 
 export async function getStudioHomePanelData(studioId: string) {
+  console.log('studioId', studioId)
   // throw new Error('not implemented')
   return 'home panel data'
+}
+
+export async function getStudioConfig(userId: string) {
+  try {
+    const studio = prisma.studio.findUnique({
+      where: {
+        userId,
+      },
+      select: {
+        name: true,
+        userId: true,
+        ageLevel: {
+          select: {
+            id: true,
+            name: true,
+            description: true,
+            studioId: true,
+            danceClass: {
+              select: {
+                id: true,
+              },
+            },
+          },
+        },
+        skillLevel: {
+          select: {
+            id: true,
+            name: true,
+            description: true,
+            studioId: true,
+            danceClass: {
+              select: {
+                id: true,
+              },
+            },
+          },
+        },
+
+        styleOfDance: {
+          select: {
+            id: true,
+            name: true,
+            studioId: true,
+            description: true,
+            // danceClass: {
+            //   select: {
+            //     id: true,
+            //   },
+            // },
+          },
+        },
+        tights: true,
+        footwear: true,
+      },
+    })
+    return studio
+  } catch (e) {
+    console.error(e)
+    throw new Error('Failed to get studio config')
+  }
 }
