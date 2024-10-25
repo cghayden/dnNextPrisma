@@ -140,26 +140,26 @@ export async function getStudioConfig(userId: string) {
       select: {
         name: true,
         userId: true,
-        ageLevel: {
+        ageLevels: {
           select: {
             id: true,
             name: true,
             description: true,
             studioId: true,
-            danceClass: {
+            danceClasses: {
               select: {
                 id: true,
               },
             },
           },
         },
-        skillLevel: {
+        skillLevels: {
           select: {
             id: true,
             name: true,
             description: true,
             studioId: true,
-            danceClass: {
+            danceClasses: {
               select: {
                 id: true,
               },
@@ -167,7 +167,7 @@ export async function getStudioConfig(userId: string) {
           },
         },
 
-        styleOfDance: {
+        stylesOfDance: {
           select: {
             id: true,
             name: true,

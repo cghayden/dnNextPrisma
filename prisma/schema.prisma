@@ -38,34 +38,34 @@ model User {
 model Studio {
   userId        String         @id
   name          String
-  ageLevel      AgeLevel[]
-  danceClass    DanceClass[]
-  enrollment    Enrollment[]
+  ageLevels      AgeLevel[]
+  danceClasses    DanceClass[]
+  enrollments    Enrollment[]
   footwear      Footwear[]
-  skillLevel    SkillLevel[]
+  skillLevels    SkillLevel[]
   user          User           @relation(fields: [userId], references: [userId], onDelete: Cascade)
-  styleOfDance  StyleOfDance[]
+  stylesOfDance  StyleOfDance[]
   tights        Tights[]
-  instructor    Instructor[]
+  instructors   Instructor[]
 }
 
 model Parent {
   userId     String       @id
   firstName  String
   lastName   String
-  danceClass DanceClass[]
-  dancer     Dancer[]
+  danceClasses DanceClass[]
+  dancers     Dancer[]
   user       User         @relation(fields: [userId], references: [userId], onDelete: Cascade)
-  parentNote ParentNote[]
+  parentNotes ParentNote[]
 }
 
 model Instructor {
   userId     String       @id
   firstName  String
   lastName   String
-  danceClass DanceClass[]
+  danceClasses DanceClass[]
   user       User         @relation(fields: [userId], references: [userId])
-  studio     Studio[]
+  studios     Studio[]
 }
 
 model AgeLevel {
@@ -74,7 +74,7 @@ model AgeLevel {
   description String?
   studioId    String
   Studio      Studio       @relation(fields: [studioId], references: [userId], onDelete: Cascade)
-  danceClass  DanceClass[]
+  danceClasses  DanceClass[]
 }
 
 model DanceClass {
@@ -109,8 +109,8 @@ model DanceClass {
   studio                    Studio?      @relation(fields: [studioId], references: [userId], onDelete: Cascade)
   styleOfDance              StyleOfDance @relation(fields: [styleOfDanceId], references: [id])
   tights                    Tights?      @relation(fields: [tightsId], references: [id])
-  enrollment                Enrollment[]
-  schedule                  Schedule[]
+  enrollments                Enrollment[]
+  schedules                  Schedule[]
 }
 
 model Dancer {
@@ -121,7 +121,7 @@ model Dancer {
   parentId      String
   imageFilename String?
   parent        Parent       @relation(fields: [parentId], references: [userId], onDelete: Cascade)
-  enrollment    Enrollment[]
+  enrollments    Enrollment[]
 }
 
 model Enrollment {
@@ -144,7 +144,7 @@ model Footwear {
   studioId      String
   imageFilename String?
   color         String?
-  danceClass    DanceClass[]
+  danceClasses    DanceClass[]
   studio        Studio       @relation(fields: [studioId], references: [userId], onDelete: Cascade)
 }
 
@@ -170,7 +170,7 @@ model SkillLevel {
   name        String
   description String?
   studioId    String
-  danceClass  DanceClass[]
+  danceClasses  DanceClass[]
   studio      Studio       @relation(fields: [studioId], references: [userId], onDelete: Cascade)
 }
 
@@ -179,7 +179,7 @@ model StyleOfDance {
   name        String
   description String?
   studioId    String
-  danceClass  DanceClass[]
+  danceClasses  DanceClass[]
   studio      Studio       @relation(fields: [studioId], references: [userId], onDelete: Cascade)
 }
 
@@ -191,7 +191,7 @@ model Tights {
   imageFilename String?
   studioId      String
   color         String?
-  danceClass    DanceClass[]
+  danceClasses    DanceClass[]
   studio        Studio       @relation(fields: [studioId], references: [userId], onDelete: Cascade)
 }
 

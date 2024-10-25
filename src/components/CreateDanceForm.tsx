@@ -31,7 +31,7 @@ const CreateDanceForm = ({ studioConfig }) => {
         // fullWidth
       />
       <RadioGroup label='Style of Dance:' orientation='horizontal'>
-        {studioConfig.styleOfDance.map((style) => (
+        {studioConfig.stylesOfDance.map((style) => (
           <Radio key={style.id} value={style.id}>
             {style.name}
           </Radio>
@@ -39,7 +39,7 @@ const CreateDanceForm = ({ studioConfig }) => {
       </RadioGroup>
 
       <RadioGroup label='Style of Dance:' orientation='horizontal'>
-        {studioConfig.ageLevel.map((ageLevel) => (
+        {studioConfig.ageLevels.map((ageLevel) => (
           <Radio key={ageLevel.id} value={ageLevel.id}>
             {ageLevel.name}
           </Radio>

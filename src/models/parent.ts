@@ -60,7 +60,7 @@ export const getParentFromDancer = memoize(
   async (dancerId: string) => {
     const parent = await prisma.parent.findFirst({
       where: {
-        dancer: {
+        dancers: {
           some: {
             id: dancerId,
           },
@@ -75,12 +75,12 @@ export const getParentFromDancer = memoize(
             email: true,
           },
         },
-        dancer: {
+        dancers: {
           select: {
             id: true,
             firstName: true,
             lastName: true,
-            enrollment: {
+            enrollments: {
               select: {
                 danceClass: {
                   select: {

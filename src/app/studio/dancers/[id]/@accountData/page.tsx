@@ -21,14 +21,14 @@ const DancerDataSlot = async ({ params }: { params: { id: string } }) => {
         </div>
 
         <ul className='m-2'>
-          {dancerParent?.dancer.map((dancer) => (
+          {dancerParent?.dancers.map((dancer) => (
             <li key={dancer.id} className='my-2'>
               <div className='rounded-md overflow-hidden'>
                 <h3 className='bg-zinc-300 text-center py-2 font-semibold'>
                   {dancer.firstName} {dancer.lastName}
                 </h3>
                 <ul className='bg-zinc-200 p-2'>
-                  {dancer.enrollment.map((enrollment) => {
+                  {dancer.enrollments.map((enrollment) => {
                     return (
                       <li key={enrollment.danceClass.id}>
                         {enrollment.danceClass.name}
