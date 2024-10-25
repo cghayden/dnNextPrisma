@@ -2,7 +2,7 @@
 import { cookies } from 'next/headers'
 import { z } from 'zod'
 import { redirect } from 'next/navigation'
-import { COOKIE_NAME } from '@/utils/constants'
+import { COOKIE_NAME, USER_TYPE_COOKIE_NAME } from '@/utils/constants'
 import { signupParent } from '../../models/parent'
 // import { PassThrough } from 'stream'
 
@@ -34,9 +34,10 @@ export const registerParent = async (prevState: any, formData: FormData) => {
 
   try {
     // does user already exist?
-    const { token } = await signupParent(input.data)
+    const { token, userTypeToken } = await signupParent(input.data)
     cookies().set(COOKIE_NAME, token)
-  } catch (e) {
+    cookies().set(USER_TYPE_COOKIE_NAME, userTypeToken)
+  } catch (e: any) {
     console.error(e)
     return { message: `Error: Failed to sign up ${e.message}` }
   }

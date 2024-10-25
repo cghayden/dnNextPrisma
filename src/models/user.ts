@@ -1,7 +1,10 @@
 import 'server-only'
 
 import prisma from '@/db/db'
-import { createTokenForUser } from '@/utils/createTokenForUser'
+import {
+  createTokenForUser,
+  createTypeTokenForUser,
+} from '@/utils/createTokenForUser'
 import type { User } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 import { cookies } from 'next/headers'
@@ -34,8 +37,9 @@ export async function signinUser({
   const { password: _password, ...userWithoutPassword } = userWithPassword
 
   const token = createTokenForUser(userWithoutPassword.userId)
+  const userTypeToken = createTypeTokenForUser(userWithoutPassword.type)
 
-  return { user: userWithoutPassword, token }
+  return { user: userWithoutPassword, token, userTypeToken }
 }
 
 export const getCurrentUser = cache(async () => {

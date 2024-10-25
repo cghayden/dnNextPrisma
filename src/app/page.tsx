@@ -10,7 +10,6 @@ import Signup from '@/components/Signup'
 // import { useOptionalUser } from '~/utils'
 
 export default function Welcome() {
-  // const [showUserTypeChoice, toggleShowUserTypeChoice] = useState(false)
   const [showSignup, setShowSignup] = useState(false)
 
   // const user = useOptionalUser()

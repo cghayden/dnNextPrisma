@@ -13,6 +13,9 @@ useFormState from react-dom
 
 ## cache and memoization
 
+next 14 automatically caches unless there is dynamic content..
+our pages / components are using cookies, so Next 14 will not cache them, unless we specifically memoize or cache the functions manually
+
 ### useMemo
 
 use useMemo() for caching an expensive computation in a Client Component across renders.
@@ -42,3 +45,5 @@ uses react cache in combo with nextjs unstable_cache.
 (if you don't memoize unstable_cache, it runs multiple times per request)
 
 use this to cache non-request based functions that don't use cookies/headers
+
+OPTIMALLY, you want to cache, but want to be in control of the cache. should be opt-in, not opt-out, so you won't have to wonder if some unseen use of dynamic data/cookie/header is preventing the automatic caching

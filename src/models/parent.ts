@@ -1,18 +1,7 @@
 import 'server-only'
 import prisma from '@/db/db'
 import { memoize } from 'nextjs-better-unstable-cache'
-
-import type {
-  User,
-  Parent,
-  // Studio,
-  // AgeLevel,
-  // DanceClass,
-  // SkillLevel,
-  // Tights,
-  // Footwear,
-  // StyleOfDance,
-} from '@prisma/client'
+import type { User, Parent } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 import { createTokenForUser } from '@/utils/createTokenForUser'
 
@@ -50,8 +39,9 @@ export async function signupParent({
     })
 
     const token = createTokenForUser(newParent.userId)
-    return { token, newParent }
-  } catch (error) {
+    const userTypeToken = createTokenForUser('parent')
+    return { token, userTypeToken }
+  } catch (error: any) {
     console.error('Error creating new parent:', error)
     throw new Error(`Failed to create new parent: ${error.message}`)
   }

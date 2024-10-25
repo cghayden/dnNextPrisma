@@ -46,7 +46,8 @@ export async function signupStudio({
     },
   })
   const token = createTokenForUser(newStudio.userId)
-  return { token, newStudio }
+  const userTypeToken = createTokenForUser('studio')
+  return { token, userTypeToken }
 }
 
 export const getUniqueDancers = memoize(

@@ -13,14 +13,11 @@ export function middleware(request: NextRequest) {
   // if cookie, redirect to studio home
   if (request.nextUrl.pathname === '/') {
     if (request.cookies.has(COOKIE_NAME)) {
-      return NextResponse.redirect(new URL('/studio', request.url))
+      return NextResponse.redirect(new URL('/userRouter', request.url))
     }
   }
 }
 
 export const config = {
-  // lockdown:
-  // a) child routes of dashboard
-  // b) '/', where we we're not going to render a page/  ( at '/', either go to logged in user, or to signin)
   matcher: ['/'],
 }
