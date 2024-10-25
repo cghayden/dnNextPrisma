@@ -1,7 +1,6 @@
 'use client'
 
 import { Input } from '@nextui-org/react'
-import Link from 'next/link'
 import { useFormState } from 'react-dom'
 import SubmitButton from './SubmitButton'
 import { registerStudio } from '@/actions/auth/registerStudio'
@@ -13,7 +12,6 @@ const StudioSignupForm = () => {
     registerStudio,
     initialState
   )
-  console.log('formState', formState)
 
   return (
     <form
