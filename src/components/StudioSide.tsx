@@ -29,7 +29,7 @@ const StudioSide = () => {
   const activeClass = 'bg-zinc-50 hover:bg-zinc-100'
 
   return (
-    <div className='w-full h-full px-3 relative bg-zinc-300'>
+    <div className='w-full h-full px-3 bg-zinc-300'>
       <div className='flex py-8'>
         <h1 className='text-2xl font-bold'>StudioNotes</h1>
       </div>
@@ -49,7 +49,7 @@ const StudioSide = () => {
           </div>
         ))}
       </div>
-      <div className='absolute bottom-0 w-full left-0 px-4'>
+      <div className='absolute bottom-0 left-0 px-4'>
         <Button fullWidth variant='ghost'>
           Sign Out
         </Button>
