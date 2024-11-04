@@ -1,8 +1,6 @@
-// /app/dashboard/layout.tsx
 'use client'
 
-import Nav from '@/components/Nav'
-import SampleSplitter from '@/components/SampleSplitter'
+import DraggableSplitter from '@/components/DraggableSplitter'
 import StudioSide from '@/components/StudioSide'
 import { cn, Input } from '@nextui-org/react'
 import { usePathname } from 'next/navigation'
@@ -20,9 +18,9 @@ const StudioDashboard = ({
   const path = usePathname()
 
   const {
-    isDragging: isSideDragging,
-    position: sideW,
-    splitterProps: sideDragBarProps,
+    isDragging: isSideBarDragging,
+    position: sidebarW,
+    separatorProps: sidebarDragBarProps,
   } = useResizable({
     axis: 'x',
     initial: 200,
@@ -31,7 +29,7 @@ const StudioDashboard = ({
   const {
     isDragging: isRightDragging,
     position: rightW,
-    splitterProps: rightDragBarProps,
+    separatorProps: rightDragBarProps,
   } = useResizable({
     axis: 'x',
     initial: 300,
@@ -51,13 +49,17 @@ const StudioDashboard = ({
           <div
             className={cn(
               'shrink-0 transitionBlur ',
-              isSideDragging && 'dragging'
+              isSideBarDragging && 'dragging'
             )}
-            style={{ width: sideW }}
+            style={{ width: sidebarW }}
           >
             <StudioSide />
           </div>
-          <SampleSplitter isDragging={isSideDragging} {...sideDragBarProps} />
+          <DraggableSplitter
+            id='sidebar-drag-bar'
+            isDragging={isSideBarDragging}
+            {...sidebarDragBarProps}
+          />
           <main className={'flex flex-grow'}>
             {path === '/studio' ? (
               <>
@@ -66,7 +68,8 @@ const StudioDashboard = ({
                 >
                   {dancers}
                 </div>
-                <SampleSplitter
+                <DraggableSplitter
+                  id='right-drag-bar'
                   isDragging={isRightDragging}
                   {...rightDragBarProps}
                 />
