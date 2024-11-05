@@ -21,8 +21,6 @@ const DanceClassesSlot = async () => {
               size='sm'
               href='/studio/createDanceClass'
               as={Link}
-              // onClick={handleClick}
-              // isLoading={isPending}
             >
               <CirclePlus size={16} />
             </Button>
@@ -33,7 +31,9 @@ const DanceClassesSlot = async () => {
         {danceClasses.map((danceClass) => {
           return (
             <li key={danceClass.id} className='pl-2 py-1'>
-              <Link href={`/classes/${danceClass.id}`}>{danceClass.name}</Link>
+              <Link href={`/studio/singleClass/${danceClass.id}`}>
+                {danceClass.name}
+              </Link>
             </li>
           )
         })}

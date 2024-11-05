@@ -87,9 +87,7 @@ model DanceClass {
   song                      String?
   competitions              Boolean?
   recital                   Boolean
-  studioId                  String?
   instructorId              String?
-  parentId                  String?
   ageLevelId                String
   skillLevelId              String
   startTime                 String?
@@ -105,8 +103,10 @@ model DanceClass {
   footwear                  Footwear?    @relation(fields: [footwearId], references: [id])
   instructor                Instructor?  @relation(fields: [instructorId], references: [userId])
   parent                    Parent?      @relation(fields: [parentId], references: [userId], onDelete: Cascade)
+  parentId                  String?
   skillLevel                SkillLevel   @relation(fields: [skillLevelId], references: [id])
   studio                    Studio?      @relation(fields: [studioId], references: [userId], onDelete: Cascade)
+  studioId                  String?
   styleOfDance              StyleOfDance @relation(fields: [styleOfDanceId], references: [id])
   tights                    Tights?      @relation(fields: [tightsId], references: [id])
   enrollments                Enrollment[]
