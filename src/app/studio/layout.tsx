@@ -23,7 +23,7 @@ const StudioDashboard = ({
     separatorProps: sidebarDragBarProps,
   } = useResizable({
     axis: 'x',
-    initial: 200,
+    initial: 170,
     min: 50,
   })
   const {
@@ -32,6 +32,16 @@ const StudioDashboard = ({
     separatorProps: rightDragBarProps,
   } = useResizable({
     axis: 'x',
+    initial: 300,
+    min: 50,
+    reverse: true,
+  })
+  const {
+    isDragging: isBRDragging,
+    position: BR_Height,
+    separatorProps: BR_DragBarProps,
+  } = useResizable({
+    axis: 'y',
     initial: 300,
     min: 50,
     reverse: true,
@@ -63,9 +73,7 @@ const StudioDashboard = ({
           <main className={'flex flex-grow'}>
             {path === '/studio' ? (
               <>
-                <div
-                  className={'grow bg-darker transitionBlur overflow-scroll'}
-                >
+                <div className={'flex-grow transitionBlur overflow-scroll'}>
                   {dancers}
                 </div>
                 <DraggableSplitter
@@ -80,10 +88,26 @@ const StudioDashboard = ({
                   )}
                   style={{ width: rightW }}
                 >
-                  <div className='border-b border-zinc-600 w-full h-1/2 overflow-scroll'>
-                    {danceClasses}
+                  <div className='flex flex-col h-full'>
+                    <div className='w-full flex-grow overflow-scroll'>
+                      {danceClasses}
+                    </div>
+                    <DraggableSplitter
+                      dir={'horizontal'}
+                      id='BR-drag-bar'
+                      isDragging={isBRDragging}
+                      {...BR_DragBarProps}
+                    />
+                    <div
+                      className={cn(
+                        'shrink-0 transitionBlur',
+                        isBRDragging && 'dragging'
+                      )}
+                      style={{ height: BR_Height }}
+                    >
+                      {children}
+                    </div>
                   </div>
-                  <div className='w-full h-1/2'>{children}</div>
                 </div>
               </>
             ) : (

@@ -12,7 +12,7 @@ html {
 
 .drag-bar {
   flex-shrink: 0;
-  width: 3px;
+  width: 2px;
   background-color: #0b111b;
   cursor: col-resize;
   transition: background-color 0.15s 0.15s ease-in-out;
@@ -24,7 +24,7 @@ html {
 }
 
 .drag-bar.drag-bar--horizontal {
-  height: 5px;
+  height: 2px;
   width: 100%;
   cursor: row-resize;
 }
