@@ -4,14 +4,14 @@ import { z } from 'zod'
 import { redirect } from 'next/navigation'
 import { COOKIE_NAME, USER_TYPE_COOKIE_NAME } from '@/utils/constants'
 import { signinUser } from '../../models/user'
-// import { PassThrough } from 'stream'
+import getErrorMessage from '@/utils/reportError'
 
 const authSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
   password: z.string(),
 })
 
-export const signin = async (prevState: any, formData: FormData) => {
+export const signin = async (prevState: unknown, formData: FormData) => {
   // validate input with zod
   const input = authSchema.safeParse({
     email: formData.get('email'),
@@ -33,9 +33,8 @@ export const signin = async (prevState: any, formData: FormData) => {
       cookies().set(COOKIE_NAME, token)
       cookies().set(USER_TYPE_COOKIE_NAME, userTypeToken)
     }
-  } catch (e: any) {
-    console.error(e)
-    return { message: `Failed to sign in ${e.message}` }
+  } catch (e) {
+    return { message: getErrorMessage(e) }
   }
   // redirect cannot be put in a try-catch
   redirect(`/${user?.type.toLowerCase()}`)

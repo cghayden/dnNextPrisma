@@ -125,13 +125,9 @@ export const getStudioDanceClasses = memoize(
   }
 )
 
-export async function getStudioHomePanelData(studioId: string) {
-  console.log('studioId', studioId)
-  // throw new Error('not implemented')
-  return 'home panel data'
-}
-
-export async function getStudioConfig(userId: string) {
+export async function getStudioConfig(
+  userId: string
+): Promise<StudioNewDanceOptions | null> {
   try {
     const studio = prisma.studio.findUnique({
       where: {
@@ -144,44 +140,32 @@ export async function getStudioConfig(userId: string) {
           select: {
             id: true,
             name: true,
-            description: true,
-            studioId: true,
-            danceClasses: {
-              select: {
-                id: true,
-              },
-            },
           },
         },
         skillLevels: {
           select: {
             id: true,
             name: true,
-            description: true,
-            studioId: true,
-            danceClasses: {
-              select: {
-                id: true,
-              },
-            },
           },
         },
-
         stylesOfDance: {
           select: {
             id: true,
             name: true,
-            studioId: true,
-            description: true,
-            // danceClass: {
-            //   select: {
-            //     id: true,
-            //   },
-            // },
           },
         },
-        tights: true,
-        footwear: true,
+        tights: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        footwear: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
     })
     return studio
@@ -189,4 +173,29 @@ export async function getStudioConfig(userId: string) {
     console.error(e)
     throw new Error('Failed to get studio config')
   }
+}
+
+export interface StudioNewDanceOptions {
+  name: string
+  userId: string
+  ageLevels: {
+    id: string
+    name: string
+  }[]
+  skillLevels: {
+    id: string
+    name: string
+  }[]
+  stylesOfDance: {
+    id: string
+    name: string
+  }[]
+  tights: {
+    id: string
+    name: string
+  }[]
+  footwear: {
+    id: string
+    name: string
+  }[]
 }

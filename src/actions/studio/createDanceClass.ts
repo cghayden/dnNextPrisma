@@ -1,4 +1,5 @@
 'use server'
+import getErrorMessage from '@/utils/reportError'
 import { z } from 'zod'
 
 const danceSchema = z.object({
@@ -36,9 +37,8 @@ export const registerParent = async (
 
   try {
     // save new dance class
-  } catch (e: unknown) {
-    console.error(e)
-    return { message: `Error: Failed to sign up ${e.message}` }
+  } catch (e) {
+    return { message: getErrorMessage(e) }
   }
   // redirect to newly created class
   // redirect('/parent')

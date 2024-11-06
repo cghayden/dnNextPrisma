@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { redirect } from 'next/navigation'
 import { COOKIE_NAME, USER_TYPE_COOKIE_NAME } from '@/utils/constants'
 import { signupParent } from '../../models/parent'
-// import { PassThrough } from 'stream'
+import getErrorMessage from '@/utils/reportError'
 
 const signupParentSchema = z.object({
   firstName: z
@@ -40,9 +40,9 @@ export const registerParent = async (
     const { token, userTypeToken } = await signupParent(input.data)
     cookies().set(COOKIE_NAME, token)
     cookies().set(USER_TYPE_COOKIE_NAME, userTypeToken)
-  } catch (e: any) {
+  } catch (e) {
     console.error(e)
-    return { message: `Error: Failed to sign up ${e.message}` }
+    return { message: getErrorMessage(e) }
   }
   // redirect cannot be put in a try-catch
   redirect('/parent')

@@ -3,12 +3,16 @@ import { RadioGroup, Radio, Input } from '@nextui-org/react'
 
 // import { Input, RadioGroup } from '@nextui-org/react'
 import SubmitButton from './SubmitButton'
+import { StudioNewDanceOptions } from '@/models/studio'
 // import { Studio } from '@prisma/client'
 // import { Chip } from '@nextui-org/chip'
 // import { Radio } from 'lucide-react'
 
-const CreateDanceForm = ({ studioConfig }) => {
-  console.log('studioConfig', studioConfig)
+const CreateDanceForm = ({
+  studioConfig,
+}: {
+  studioConfig: StudioNewDanceOptions
+}) => {
   return (
     <form
       className='bg-content1 border border-zinc-400 shadow-lg rounded-md p-3 flex flex-col gap-2 '
@@ -21,14 +25,12 @@ const CreateDanceForm = ({ studioConfig }) => {
         type='text'
         placeholder='Dance Name'
         required
-        // fullWidth
       />
       <Input
         name='performanceName'
         size='md'
         type='text'
         placeholder='Performance Name'
-        // fullWidth
       />
       <RadioGroup label='Style of Dance:' orientation='horizontal'>
         {studioConfig.stylesOfDance.map((style) => (

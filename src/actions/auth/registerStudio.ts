@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { redirect } from 'next/navigation'
 import { COOKIE_NAME, USER_TYPE_COOKIE_NAME } from '@/utils/constants'
 import { signupStudio } from '../../models/studio'
-// import { PassThrough } from 'stream'
+import getErrorMessage from '@/utils/reportError'
 
 const signupStudioSchema = z.object({
   name: z
@@ -16,7 +16,10 @@ const signupStudioSchema = z.object({
     .min(8, { message: 'Password Must Be At Least 8 Characters' }),
 })
 
-export const registerStudio = async (prevState: any, formData: FormData) => {
+export const registerStudio = async (
+  prevState: unknown,
+  formData: FormData
+) => {
   // validate input with zod
   const input = signupStudioSchema.safeParse({
     name: formData.get('name'),
@@ -34,10 +37,10 @@ export const registerStudio = async (prevState: any, formData: FormData) => {
 
     cookies().set(COOKIE_NAME, token)
     cookies().set(USER_TYPE_COOKIE_NAME, userTypeToken)
-  } catch (e: any) {
-    console.error(e)
-    return { message: `Error: Failed to sign up ${e.message}` }
+  } catch (e) {
+    return { message: getErrorMessage(e) }
   }
+
   // redirect cannot be put in a try-catch
   redirect('/studio')
 }

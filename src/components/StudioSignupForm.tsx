@@ -5,13 +5,8 @@ import { useFormState } from 'react-dom'
 import SubmitButton from './SubmitButton'
 import { registerStudio } from '@/actions/auth/registerStudio'
 
-const initialState = { message: null }
-
 const StudioSignupForm = () => {
-  const [formState, action] = useFormState<{ message: string | null }>(
-    registerStudio,
-    initialState
-  )
+  const [formState, action] = useFormState(registerStudio, null)
 
   return (
     <form
@@ -47,7 +42,7 @@ const StudioSignupForm = () => {
       />
       <SubmitButton label={'Sign Up'} />
 
-      {formState.message && <p>{formState.message}</p>}
+      {formState?.message && <p>{formState.message}</p>}
     </form>
   )
 }

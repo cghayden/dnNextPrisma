@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation'
 const ParentDashboard = ({
   children,
   dancers,
-  danceClasses,
 }: {
   children: React.ReactNode
   dancers: React.ReactNode
