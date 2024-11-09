@@ -1,8 +1,6 @@
 'use client'
 
-// import Image from 'next/image'
 import Link from 'next/link'
-// import Logo from '@/images/pardy.png'
 import { Button, cn } from '@nextui-org/react'
 import { usePathname } from 'next/navigation'
 
@@ -11,12 +9,10 @@ const links = [
   { route: '/studio/dancers', name: 'Dancers' },
   { route: '/studio/classes', name: 'Classes' },
   { route: '/studio/events', name: 'Events' },
-  { route: '/studio/settings', name: 'Settings' },
+  { route: '/studio/configuration', name: 'My Studio' },
 ]
 
 const isActive = (path: string, route: string) => {
-  // all routes other than auth routes include "/dashboard"
-  // so handle that first
   if (route === '/studio') {
     return path === '/studio'
   } else {
@@ -24,7 +20,7 @@ const isActive = (path: string, route: string) => {
   }
 }
 
-const StudioSide = () => {
+const StudioSideBar = () => {
   const path = usePathname()
   const activeClass = 'bg-zinc-50 hover:bg-zinc-100'
 
@@ -58,4 +54,4 @@ const StudioSide = () => {
   )
 }
 
-export default StudioSide
+export default StudioSideBar

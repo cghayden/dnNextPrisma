@@ -1,7 +1,7 @@
 'use client'
 
 import DraggableSplitter from '@/components/DraggableSplitter'
-import StudioSide from '@/components/StudioSide'
+import StudioSideBar from '@/components/StudioSideBar'
 import { cn, Input } from '@nextui-org/react'
 import { usePathname } from 'next/navigation'
 import { useResizable } from 'react-resizable-layout'
@@ -63,7 +63,7 @@ const StudioDashboard = ({
             )}
             style={{ width: sidebarW }}
           >
-            <StudioSide />
+            <StudioSideBar />
           </div>
           <DraggableSplitter
             id='sidebar-drag-bar'

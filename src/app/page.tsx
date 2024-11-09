@@ -46,12 +46,12 @@ export default function Welcome() {
                 href='/api/signinSampleStudio'
                 className='whitespace-nowrap'
               >
-                Login To Sample Studio
+                Login To Sample Studio Account
               </Link>
               <br />
-              <a className='whitespace-nowrap' href='loginSampleParent'>
+              {/* <a className='whitespace-nowrap' href='loginSampleParent'>
                 Login To Sample Parent Account
-              </a>
+              </a> */}
             </div>
           </div>
         </div>
