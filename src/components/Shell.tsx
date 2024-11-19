@@ -1,4 +1,4 @@
-import Nav from './Nav'
+import Header from './Header'
 import StudioSideBar from './StudioSideBar'
 
 const Shell = ({ children }: { children: React.ReactNode }) => {
@@ -8,7 +8,7 @@ const Shell = ({ children }: { children: React.ReactNode }) => {
         <StudioSideBar />
       </aside>
       <div className='w-[calc(100vw-200px)] '>
-        <Nav />
+        <Header />
         <main className='h-[calc(100vh-65px)]'>{children}</main>
       </div>
     </div>

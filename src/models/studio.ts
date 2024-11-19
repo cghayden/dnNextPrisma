@@ -16,6 +16,7 @@ import type {
 import bcrypt from 'bcryptjs'
 import { createTokenForUser } from '@/utils/createTokenForUser'
 import { delay } from '@/utils/delay'
+import { cache } from 'react'
 
 export async function signupStudio({
   name,
@@ -88,8 +89,8 @@ export const getUniqueDancers = memoize(
   {
     persist: true,
     revalidateTags: () => ['dashboard:dancers'],
-    log: ['datacache', 'verbose', 'dedupe'],
-    logid: 'dashboard:dancers',
+    // log: ['datacache', 'verbose', 'dedupe'],
+    // logid: 'dashboard:dancers',
     suppressWarnings: true,
   }
 )
@@ -119,8 +120,8 @@ export const getStudioDanceClasses = memoize(
   {
     persist: true,
     revalidateTags: () => ['dashboard:danceClasses'],
-    log: ['datacache', 'verbose', 'dedupe'],
-    logid: 'dashboard:danceClasses',
+    // log: ['datacache', 'verbose', 'dedupe'],
+    // logid: 'dashboard:danceClasses',
     suppressWarnings: true,
   }
 )
@@ -174,6 +175,19 @@ export async function getStudioConfig(
     throw new Error('Failed to get studio config')
   }
 }
+
+export const getStudioName = cache(async (userId: string) => {
+  console.log('getting studio name...')
+  const user = await prisma.user.findUnique({
+    where: {
+      userId,
+    },
+    include: {
+      studio: true,
+    },
+  })
+  return user?.studio?.name
+})
 
 export interface StudioNewDanceOptions {
   name: string

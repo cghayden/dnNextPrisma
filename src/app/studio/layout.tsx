@@ -2,7 +2,7 @@
 
 import DraggableSplitter from '@/components/DraggableSplitter'
 import StudioSideBar from '@/components/StudioSideBar'
-import { cn, Input } from '@nextui-org/react'
+import { cn } from '@nextui-org/react'
 import { usePathname } from 'next/navigation'
 import { useResizable } from 'react-resizable-layout'
 
@@ -10,10 +10,12 @@ const StudioDashboard = ({
   children,
   dancers,
   danceClasses,
+  studioName,
 }: {
   children: React.ReactNode
   dancers: React.ReactNode
   danceClasses: React.ReactNode
+  studioName: React.ReactNode
 }) => {
   const path = usePathname()
 
@@ -51,7 +53,8 @@ const StudioDashboard = ({
     <>
       <nav className='h-[65px] border-b border-zinc-600 flex items-center px-6 gap-4 bg-zinc-300'>
         <div className='w-1/2'>
-          <Input size='sm' variant='faded' placeholder='search' />
+          {/* <Input size='sm' variant='faded' placeholder='search' /> */}
+          {studioName}
         </div>
       </nav>
       <div className='flex' style={{ height: 'calc(100vh - 65px)' }}>

@@ -43,11 +43,12 @@ export async function signinUser({
 }
 
 export const getCurrentUser = cache(async () => {
-  console.log('getting current user')
+  // console.log('getting current user...:')
   const token = cookies().get(COOKIE_NAME)
   if (!token) redirect('/signin')
   const user = await getUserFromToken(token)
   if (!user) redirect('/signin')
+  // console.log('user:', user)
   return user
 })
 

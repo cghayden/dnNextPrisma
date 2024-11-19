@@ -10,11 +10,9 @@ const SingleDanceClassPage = async ({ params }: { params: { id: string } }) => {
   const user = await getCurrentUser()
   const studioId = user.userId
   const danceClass = await getStudioDanceClass(danceClassId, studioId)
-  console.log('danceClass', danceClass)
   // if there is no user, it will redirect to signin ...
 
   return (
-    // <div className='w-full flex h-full'>
     <div>
       <h2 className='panel_heading'>{danceClass.name}</h2>
       <div>
@@ -31,7 +29,6 @@ const SingleDanceClassPage = async ({ params }: { params: { id: string } }) => {
         </div>
       </div>
     </div>
-    // </div>
   )
 }
 
