@@ -1,11 +1,11 @@
-import Header from './Header'
-import StudioSideBar from './StudioSideBar'
+import Header from '../Header'
+import ParentSideBar from './ParentSideBar'
 
-const Shell = ({ children }: { children: React.ReactNode }) => {
+const ParentShell = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className='SHELL flex w-screen h-screen'>
       <aside className='w-[200px] min-w-[200px] max-w-[200px] h-full border-r border-zinc-600'>
-        <StudioSideBar />
+        <ParentSideBar />
       </aside>
       <div className='w-[calc(100vw-200px)] '>
         <Header />
@@ -15,4 +15,4 @@ const Shell = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
-export default Shell
+export default ParentShell

@@ -1,6 +1,6 @@
 import { getCurrentUser } from '@/models/user'
 
-const ParentHome = async () => {
+const ParentEventsPage = async () => {
   const user = await getCurrentUser()
   console.log('user at parent page.tsx', user)
   // if there is no user, it will redirect to signin ...
@@ -8,10 +8,10 @@ const ParentHome = async () => {
   return (
     <div className='w-full flex h-full justify-center items-center'>
       <div>
-        <h4 className='text-lg'>parent page.tsx / home</h4>
+        <p className='text-lg'>List upcoming events for parents dancers</p>
       </div>
     </div>
   )
 }
 
-export default ParentHome
+export default ParentEventsPage

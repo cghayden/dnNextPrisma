@@ -8,7 +8,7 @@ import { redirect } from 'next/navigation'
 export const routeCurrentUser = async () => {
   const userTypeToken = cookies().get(USER_TYPE_COOKIE_NAME)
   if (!userTypeToken) {
-    redirect('/signin')
+    redirect('/')
   }
   const payload = jwt.verify(
     userTypeToken.value,
