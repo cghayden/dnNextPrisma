@@ -42,11 +42,9 @@ export default function Welcome() {
           </div>
           <div className='relative text-gray-50'>
             <div className='flex flex-col md:flex-row flex-wrap'>
-              {/* <SigninSampleStudioForm /> */}
+              <SigninSampleStudioForm />
               <br />
-              {/* <a className='whitespace-nowrap' href='loginSampleParent'>
-                Login To Sample Parent Account
-              </a> */}
+              {/* <SigninSampleParentForm /> */}
             </div>
           </div>
         </div>
