@@ -6,6 +6,7 @@ import Image from 'next/image'
 import SignInForm from '@/components/SigninForm'
 import Signup from '@/components/Signup'
 import Link from 'next/link'
+import SigninSampleStudioForm from '@/components/SigninSampleStudioForm'
 export default function Welcome() {
   const [showSignup, setShowSignup] = useState(false)
 
@@ -42,12 +43,7 @@ export default function Welcome() {
           </div>
           <div className='relative text-gray-50'>
             <div className='flex flex-col md:flex-row flex-wrap'>
-              <Link
-                href='/api/signinSampleStudio'
-                className='whitespace-nowrap'
-              >
-                Login To Sample Studio Account
-              </Link>
+              <SigninSampleStudioForm />
               <br />
               {/* <a className='whitespace-nowrap' href='loginSampleParent'>
                 Login To Sample Parent Account
