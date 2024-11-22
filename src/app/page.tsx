@@ -5,7 +5,6 @@ import stageLights from '@/images/stageLights.png'
 import Image from 'next/image'
 import SignInForm from '@/components/SigninForm'
 import Signup from '@/components/Signup'
-import Link from 'next/link'
 import SigninSampleStudioForm from '@/components/SigninSampleStudioForm'
 export default function Welcome() {
   const [showSignup, setShowSignup] = useState(false)
