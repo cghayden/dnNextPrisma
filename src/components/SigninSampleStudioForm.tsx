@@ -7,6 +7,7 @@ import { useFormState } from 'react-dom'
 
 export default function SigninSampleStudioForm() {
   const [formState, action] = useFormState(signinSampleStudio, null)
+  console.log('formState', formState)
 
   return (
     <>
