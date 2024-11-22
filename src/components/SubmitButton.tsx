@@ -11,7 +11,7 @@ export default function SubmitButton({
 }) {
   const { pending } = useFormStatus()
   return (
-    <Button {...btnProps} type='submit' isLoading={pending}>
+    <Button {...btnProps} type='submit' isLoading={pending} form='studioSignup'>
       {label}
     </Button>
   )

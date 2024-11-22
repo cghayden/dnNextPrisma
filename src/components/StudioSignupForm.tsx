@@ -10,6 +10,7 @@ const StudioSignupForm = () => {
 
   return (
     <form
+      id='studioSignup'
       className='bg-content1 border border-zinc-400 shadow-lg rounded-md p-3 flex flex-col gap-2 '
       action={action}
     >
